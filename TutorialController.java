@@ -13,14 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import static javax.script.ScriptEngine.FILENAME;
+
 @RestController
 public class TutorialController {
 
     @Autowired
     private TutorialService tutorialService;
 
+    public TutorialController() throws FileNotFoundException {
+    }
+
     //uploading file
-    @PostMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/upload")
     public ResponseEntity<String> uploadData(@RequestParam("file") MultipartFile file) {
         try {
             String message = "upload file successfully";
@@ -37,5 +47,7 @@ public class TutorialController {
         List tutorials = (List) tutorialService.getAllTutorials();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
 
